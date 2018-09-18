@@ -1,10 +1,106 @@
 {
   "name": "anicheck",
   "version": "1.0.0",
-  "main": "index.js",
   "repository": "https://github.com/yuyake0084/anicheck.git",
   "author": "yuyake0084 <yuyake0084@gmail.com>",
   "license": "MIT",
+  "lint-staged": {
+    "./src/**/*.js": [
+      "prettier-eslint --write",
+      "eslint --fix -c airbnb ./src/",
+      "git add"
+    ]
+  },
+  "babel": {
+    "presets": [
+      [
+        "@babel/env",
+        {
+          "useBuiltIns": "usage"
+        }
+      ],
+      "@babel/react",
+      [
+        "@babel/stage-0",
+        {
+          "decoratorsLegacy": true
+        }
+      ],
+      "@babel/flow"
+    ],
+    "plugins": [
+      "loadable-components/babel",
+      [
+        "styled-components",
+        {
+          "ssr": true
+        }
+      ],
+      [
+        "module-resolver",
+        {
+          "alias": {
+            "@actions": "./src/client/actions",
+            "@components": "./src/client/components"
+          }
+        }
+      ],
+      "dynamic-import-node",
+      "react-hot-loader/babel",
+      "add-module-exports"
+    ]
+  },
+  "stylelint": {
+    "rules": {
+      "at-rule-no-unknown": [
+        true,
+        {
+          "ignoreAtRules": [
+            "mixin",
+            "include"
+          ]
+        }
+      ]
+    },
+    "extends": [
+      "stylelint-config-standard",
+      "./node_modules/prettier-stylelint/config.js"
+    ]
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "src/**/__tests__/*.test.js"
+  ],
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "extends": [
+      "airbnb",
+      "prettier"
+    ],
+    "plugins": [
+      "react",
+      "prettier"
+    ],
+    "env": {
+      "browser": true,
+      "node": true,
+      "es6": true,
+      "serviceworker": true
+    },
+    "settings": {
+      "import/resolver": {
+        "babel-module": {
+          "root": [
+            "./src"
+          ],
+          "alias": {
+            "@actions": "./src/client/actions",
+            "@components": "./src.client/components"
+          }
+        }
+      }
+    }
+  },
   "dependencies": {
     "@babel/node": "^7.0.0",
     "@babel/preset-env": "^7.1.0",
@@ -15,7 +111,9 @@
     "axios": "^0.18.0",
     "babel-plugin-styled-components": "^1.7.1",
     "body-parser": "^1.18.3",
+    "compression": "^1.7.3",
     "express": "^4.16.3",
+    "morgan": "^1.9.1",
     "nodemon": "^1.18.4",
     "path": "^0.12.7",
     "polished": "^2.0.3",
@@ -31,9 +129,11 @@
     "@babel/cli": "^7.1.0",
     "@babel/core": "^7.1.0",
     "babel-core": "^6.26.3",
+    "babel-plugin-module-resolver": "^3.1.1",
     "eslint": "^5.6.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^3.0.1",
+    "eslint-import-resolver-babel-module": "^4.0.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-prettier": "^2.6.2",
@@ -45,6 +145,9 @@
     "prettier-eslint": "^8.8.2",
     "prettier-eslint-cli": "^4.7.1",
     "redux-logger": "^3.0.6",
+    "stylelint": "^9.5.0",
+    "stylelint-config-standard": "^18.2.0",
+    "stylelint-webpack-plugin": "^0.10.5",
     "webpack": "^4.19.1"
   }
 }
