@@ -1,5 +1,6 @@
 .DS_Store
 *.log
 
+flow-typed
 node_modules
 public/assets

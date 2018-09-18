@@ -40,6 +40,7 @@
         "module-resolver",
         {
           "alias": {
+            "@config": "./src/config",
             "@actions": "./src/client/actions",
             "@components": "./src/client/components"
           }
@@ -94,6 +95,7 @@
             "./src"
           ],
           "alias": {
+            "@config": "./src/config",
             "@actions": "./src/client/actions",
             "@components": "./src.client/components"
           }
@@ -113,12 +115,16 @@
     "body-parser": "^1.18.3",
     "compression": "^1.7.3",
     "express": "^4.16.3",
+    "helmet": "^3.13.0",
+    "hpp": "^0.2.2",
+    "loadable-components": "^2.2.3",
     "morgan": "^1.9.1",
     "nodemon": "^1.18.4",
     "path": "^0.12.7",
     "polished": "^2.0.3",
     "react": "^16.5.1",
     "react-dom": "^16.5.1",
+    "react-helmet": "^5.2.0",
     "react-router-dom": "^4.3.1",
     "redux": "^4.0.0",
     "styled-components": "^3.4.9",
@@ -130,6 +136,7 @@
     "@babel/core": "^7.1.0",
     "babel-core": "^6.26.3",
     "babel-plugin-module-resolver": "^3.1.1",
+    "better-npm-run": "^0.1.1",
     "eslint": "^5.6.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^3.0.1",
@@ -139,6 +146,7 @@
     "eslint-plugin-prettier": "^2.6.2",
     "eslint-plugin-react": "^7.11.1",
     "flow-bin": "^0.81.0",
+    "flow-typed": "^2.5.1",
     "husky": "^0.14.3",
     "lint-staged": "^7.2.2",
     "prettier": "^1.14.2",

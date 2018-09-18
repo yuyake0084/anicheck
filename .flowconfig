@@ -1,0 +1,26 @@
+[ignore]
+.*/flow-typed/.*
+.*/node_modules/.*
+.*/node_modules/config-chain/test/broken.json
+
+<PROJECT_ROOT>/public/.*
+<PROJECT_ROOT>/.*/__tests__/.*
+
+[libs]
+.*/flow-typed/.*
+
+[options]
+emoji=true
+esproposal.class_static_fields=enable
+esproposal.class_instance_fields=enable
+module.file_ext=.js
+module.file_ext=.json
+module.ignore_non_literal_requires=true
+
+module.name_mapper='^@config' -> '<PROJECT_ROOT>/src/config'
+
+suppress_type=$FlowFixMe
+suppress_comment=\\(.\\|\n\\)*\\$FlowFixMe
+
+[version]
+0.81.0
