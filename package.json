@@ -4,12 +4,31 @@
   "repository": "https://github.com/yuyake0084/anicheck.git",
   "author": "yuyake0084 <yuyake0084@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "start:dev": "better-npm-run start:dev",
+    "build": "better-npm-run build"
+  },
   "lint-staged": {
     "./src/**/*.js": [
       "prettier-eslint --write",
       "eslint --fix -c airbnb ./src/",
       "git add"
     ]
+  },
+  "betterScripts": {
+    "start:dev": {
+      "command": "./node_modules/.bin/babel-node ./src",
+      "env": {
+        "NODE_ENV": "development",
+        "PORT": 2000
+      }
+    },
+    "build": {
+      "command": "webpack --progress --hide-modules --config ./tools/webpack/config.babel.js",
+      "env": {
+        "NODE_ENV": "production"
+      }
+    }
   },
   "babel": {
     "presets": [
@@ -20,15 +39,15 @@
         }
       ],
       "@babel/react",
-      [
-        "@babel/stage-0",
-        {
-          "decoratorsLegacy": true
-        }
-      ],
       "@babel/flow"
     ],
     "plugins": [
+      [
+        "@babel/plugin-proposal-pipeline-operator",
+        {
+          "proposal": "minimal"
+        }
+      ],
       "loadable-components/babel",
       [
         "styled-components",
@@ -41,6 +60,7 @@
         {
           "alias": {
             "@config": "./src/config",
+            "@server": "./src/server",
             "@actions": "./src/client/actions",
             "@components": "./src/client/components"
           }
@@ -76,7 +96,8 @@
     "parser": "babel-eslint",
     "extends": [
       "airbnb",
-      "prettier"
+      "prettier",
+      "prettier/react"
     ],
     "plugins": [
       "react",
@@ -96,27 +117,122 @@
           ],
           "alias": {
             "@config": "./src/config",
+            "@server": "./src/server",
             "@actions": "./src/client/actions",
             "@components": "./src.client/components"
           }
         }
+      },
+      "react": {
+        "pragma": "React",
+        "version": "latest",
+        "flowVersion": "0.81"
       }
+    },
+    "rules": {
+      "global-require": "off",
+      "no-console": "off",
+      "no-underscore-dangle": "off",
+      "no-unused-expressions": "off",
+      "function-paren-newline": "off",
+      "import/first": "off",
+      "import/extensions": "off",
+      "import/no-unresolved": "off",
+      "import/no-extraneous-dependencies": "off",
+      "import/no-dynamic-require": "off",
+      "import/no-named-as-default": "off",
+      "consistent-return": "off",
+      "camelcase": "off",
+      "linebreak-style": [
+        2,
+        "unix"
+      ],
+      "quotes": "off",
+      "react/jsx-filename-extension": [
+        "error",
+        {
+          "extensions": [
+            ".js"
+          ]
+        }
+      ],
+      "semi": [
+        "error",
+        "always"
+      ],
+      "semi-spacing": [
+        "error",
+        {
+          "after": true,
+          "before": false
+        }
+      ],
+      "semi-style": [
+        "error",
+        "last"
+      ],
+      "no-extra-semi": "error",
+      "no-unexpected-multiline": "error",
+      "no-unreachable": "error",
+      "array-bracket-spacing": [
+        2,
+        "never"
+      ],
+      "keyword-spacing": 2,
+      "eol-last": 2,
+      "no-trailing-spaces": 2,
+      "jsx-a11y/anchor-is-valid": [
+        "error",
+        {
+          "specialLink": [
+            "to"
+          ]
+        }
+      ],
+      "jsx-a11y/label-has-for": [
+        2,
+        {
+          "required": {
+            "every": [
+              "nesting",
+              "id"
+            ]
+          }
+        }
+      ],
+      "prettier/prettier": [
+        "error",
+        {
+          "printWidth": 100,
+          "singleQuote": true,
+          "trailingComma": "all"
+        }
+      ]
+    },
+    "globals": {
+      "__CLIENT__": true,
+      "__SERVER__": true,
+      "__DEV__": true,
+      "__ICO__": true
     }
   },
   "dependencies": {
     "@babel/node": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/plugin-proposal-pipeline-operator": "^7.0.0",
     "@babel/preset-env": "^7.1.0",
     "@babel/preset-flow": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
-    "@babel/preset-stage-0": "^7.0.0",
     "@babel/register": "^7.0.0",
     "axios": "^0.18.0",
     "babel-plugin-styled-components": "^1.7.1",
     "body-parser": "^1.18.3",
+    "chalk": "^2.4.1",
     "compression": "^1.7.3",
     "express": "^4.16.3",
     "helmet": "^3.13.0",
     "hpp": "^0.2.2",
+    "html-minifier": "^3.5.20",
     "loadable-components": "^2.2.3",
     "morgan": "^1.9.1",
     "nodemon": "^1.18.4",
@@ -125,8 +241,13 @@
     "react": "^16.5.1",
     "react-dom": "^16.5.1",
     "react-helmet": "^5.2.0",
+    "react-redux": "^5.0.7",
+    "react-router-config": "^1.0.0-beta.4",
     "react-router-dom": "^4.3.1",
+    "react-router-redux": "^4.0.8",
     "redux": "^4.0.0",
+    "redux-thunk": "^2.3.0",
+    "serialize-javascript": "^1.5.0",
     "styled-components": "^3.4.9",
     "webpack-dev-middleware": "^3.3.0",
     "webpack-hot-middleware": "^2.24.0"
@@ -135,27 +256,39 @@
     "@babel/cli": "^7.1.0",
     "@babel/core": "^7.1.0",
     "babel-core": "^6.26.3",
+    "babel-eslint": "^9.0.0",
+    "babel-loader": "^8.0.2",
+    "babel-plugin-add-module-exports": "^1.0.0",
+    "babel-plugin-dynamic-import-node": "^2.1.0",
     "babel-plugin-module-resolver": "^3.1.1",
     "better-npm-run": "^0.1.1",
+    "compression-webpack-plugin": "^2.0.0",
     "eslint": "^5.6.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^3.0.1",
     "eslint-import-resolver-babel-module": "^4.0.0",
+    "eslint-loader": "^2.1.1",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-prettier": "^2.6.2",
     "eslint-plugin-react": "^7.11.1",
     "flow-bin": "^0.81.0",
     "flow-typed": "^2.5.1",
+    "friendly-errors-webpack-plugin": "^1.7.0",
+    "hard-source-webpack-plugin": "^0.12.0",
     "husky": "^0.14.3",
     "lint-staged": "^7.2.2",
     "prettier": "^1.14.2",
     "prettier-eslint": "^8.8.2",
     "prettier-eslint-cli": "^4.7.1",
+    "react-hot-loader": "^4.3.11",
     "redux-logger": "^3.0.6",
     "stylelint": "^9.5.0",
     "stylelint-config-standard": "^18.2.0",
     "stylelint-webpack-plugin": "^0.10.5",
-    "webpack": "^4.19.1"
+    "webpack": "^4.19.1",
+    "webpack-bundle-analyzer": "^3.0.2",
+    "webpack-cli": "^3.1.0",
+    "webpack-manifest-plugin": "^2.0.4"
   }
 }
