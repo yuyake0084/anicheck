@@ -25,4 +25,6 @@ export default (history: Object, initialState: Object = {}) => {
       }
     });
   }
+
+  return store;
 };

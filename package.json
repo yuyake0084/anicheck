@@ -6,7 +6,9 @@
   "license": "MIT",
   "scripts": {
     "start:dev": "better-npm-run start:dev",
-    "build": "better-npm-run build"
+    "build": "better-npm-run build",
+    "flow": "better-npm-run flow",
+    "precommit": "lint-staged"
   },
   "lint-staged": {
     "./src/**/*.js": [
@@ -17,7 +19,7 @@
   },
   "betterScripts": {
     "start:dev": {
-      "command": "./node_modules/.bin/babel-node ./src",
+      "command": "./node_modules/.bin/nodemon ./src",
       "env": {
         "NODE_ENV": "development",
         "PORT": 2000
@@ -28,6 +30,9 @@
       "env": {
         "NODE_ENV": "production"
       }
+    },
+    "flow": {
+      "command": "./node_modules/.bin/flow check"
     }
   },
   "babel": {
@@ -61,14 +66,18 @@
           "alias": {
             "@config": "./src/config",
             "@server": "./src/server",
-            "@actions": "./src/client/actions",
-            "@components": "./src/client/components"
+            "@client": "./src/client"
           }
         }
       ],
       "dynamic-import-node",
       "react-hot-loader/babel",
       "add-module-exports"
+    ]
+  },
+  "nodemonConfig": {
+    "watch": [
+      "./src/server"
     ]
   },
   "stylelint": {
@@ -118,8 +127,7 @@
           "alias": {
             "@config": "./src/config",
             "@server": "./src/server",
-            "@actions": "./src/client/actions",
-            "@components": "./src.client/components"
+            "@client": "./src/client"
           }
         }
       },

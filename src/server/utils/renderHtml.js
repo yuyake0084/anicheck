@@ -8,6 +8,7 @@ export default (
   assets: Object,
   htmlContent: string,
   initialState: Object,
+  styles: string,
   loadableStateTag: string,
 ) => {
   const envAssets = __DEV__ ? { js: '/assets/main.js' } : assets;
@@ -21,6 +22,9 @@ export default (
           <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
         <![endif]-->
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        
+        ${styles}
+
         ${head.title.toString()}
         ${head.base.toString()}
         ${head.meta.toString()}
@@ -37,7 +41,7 @@ export default (
             key =>
               key.substr(key.length - 2) === 'js'
                 ? `<script src="${envAssets[key]}"></script>`
-                : ''
+                : '',
           )
           .join('')}
         ${head.script.toString()}

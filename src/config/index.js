@@ -10,7 +10,7 @@ export default {
     meta: [
       {
         name: 'description',
-        content: 'This is an application for checking animation that brings moisture on dry days.'
+        content: 'This is an application for checking animation that brings moisture on dry days.',
       },
     ],
   },

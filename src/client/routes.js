@@ -1,5 +1,17 @@
 /* @flow */
 
-// import App from './app';
+import asyncHome from '@client/pages';
+import App from './app';
 
-export default [];
+export default [
+  {
+    component: App,
+    routes: [
+      {
+        path: '/',
+        exact: true,
+        component: asyncHome,
+      },
+    ],
+  },
+];

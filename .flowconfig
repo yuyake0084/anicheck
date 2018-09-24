@@ -8,6 +8,7 @@
 
 [libs]
 .*/flow-typed/.*
+tools/flow/definitions
 
 [options]
 emoji=true
@@ -18,6 +19,8 @@ module.file_ext=.json
 module.ignore_non_literal_requires=true
 
 module.name_mapper='^@config' -> '<PROJECT_ROOT>/src/config'
+module.name_mapper='^@server' -> '<PROJECT_ROOT>/src/server'
+module.name_mapper='^@client' -> '<PROJECT_ROOT>/src/client'
 
 suppress_type=$FlowFixMe
 suppress_comment=\\(.\\|\n\\)*\\$FlowFixMe

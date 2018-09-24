@@ -1,7 +1,7 @@
 /* @flow */
 
 import React from 'react';
-import { hydrate } from 'react-dom';
+import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import { Provider } from 'react-redux';
 import createHistory from 'history/createBrowserHistory';
@@ -12,12 +12,13 @@ import { loadComponents } from 'loadable-components';
 import configureStore from './configureStore';
 import routes from './routes';
 
+console.log('hoge');
 const initialState = window.__INITIAL_STATE;
 const history = createHistory();
 const store = configureStore(history, initialState);
 
 const render = (Routes: Array<Object>) => {
-  hydrate(
+  ReactDOM.hydrate(
     <AppContainer>
       <Provider store={store}>
         <ConnectedRouter history={history}>{renderRoutes(Routes)}</ConnectedRouter>
@@ -28,3 +29,15 @@ const render = (Routes: Array<Object>) => {
 };
 
 loadComponents.then(() => render(routes));
+
+if (module.hot) {
+  module.hot.accept('./routes', () => {
+    try {
+      const nextRoutes = require('./routes').default;
+
+      render(nextRoutes);
+    } catch (error) {
+      console.error(`==> Routes hot reloading error ${error}`);
+    }
+  });
+}

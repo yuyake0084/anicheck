@@ -123,6 +123,7 @@ export default {
                 alias: {
                   '@config': './src/config',
                   '@server': './src/server',
+                  '@client': './src/client',
                 }
               }
             ],
