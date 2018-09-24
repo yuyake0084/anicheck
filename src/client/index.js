@@ -12,7 +12,6 @@ import { loadComponents } from 'loadable-components';
 import configureStore from './configureStore';
 import routes from './routes';
 
-console.log('hoge');
 const initialState = window.__INITIAL_STATE;
 const history = createHistory();
 const store = configureStore(history, initialState);
@@ -28,7 +27,9 @@ const render = (Routes: Array<Object>) => {
   );
 };
 
-loadComponents.then(() => render(routes));
+loadComponents().then(() => {
+  render(routes);
+});
 
 if (module.hot) {
   module.hot.accept('./routes', () => {

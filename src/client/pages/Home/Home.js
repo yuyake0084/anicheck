@@ -4,22 +4,40 @@ import * as React from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 
-type Props = {};
+import * as homeActions from '@client/actions/home';
+import type { Home as HomeType, Dispatch } from '@client/types';
+import { List } from '@client/components';
+import { Result } from './styles';
+
+type Props = {
+  home: HomeType,
+  fetchAnimes: Function,
+};
 
 export class Home extends React.PureComponent<Props> {
   componentDidMount() {
-    console.log('did');
+    const { fetchAnimes } = this.props;
+
+    fetchAnimes();
   }
 
   render() {
+    const { home } = this.props;
+
     return (
       <>
-        <div>hoge</div>
+        <Result>{`全${home.list.length}件`}</Result>
+        <List dataArray={home.list} />
       </>
     );
   }
 }
 
-const connector = connect();
+const connector = connect(
+  ({ home }) => ({ home }),
+  (dispatch: Dispatch) => ({
+    fetchAnimes: () => dispatch(homeActions.fetchAnimes()),
+  }),
+);
 
 export default compose(connector)(Home);

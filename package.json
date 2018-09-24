@@ -6,7 +6,8 @@
   "license": "MIT",
   "scripts": {
     "start:dev": "better-npm-run start:dev",
-    "build": "better-npm-run build",
+    "clean:build": "better-npm-run clean:build",
+    "build": "yarn clean:build && better-npm-run build",
     "flow": "better-npm-run flow",
     "precommit": "lint-staged"
   },
@@ -24,6 +25,9 @@
         "NODE_ENV": "development",
         "PORT": 2000
       }
+    },
+    "clean:build": {
+      "command": "rm -rf ./public/assets"
     },
     "build": {
       "command": "webpack --progress --hide-modules --config ./tools/webpack/config.babel.js",
@@ -220,8 +224,7 @@
     "globals": {
       "__CLIENT__": true,
       "__SERVER__": true,
-      "__DEV__": true,
-      "__ICO__": true
+      "__DEV__": true
     }
   },
   "dependencies": {
@@ -242,6 +245,7 @@
     "hpp": "^0.2.2",
     "html-minifier": "^3.5.20",
     "loadable-components": "^2.2.3",
+    "moment": "^2.22.2",
     "morgan": "^1.9.1",
     "nodemon": "^1.18.4",
     "path": "^0.12.7",
@@ -252,7 +256,7 @@
     "react-redux": "^5.0.7",
     "react-router-config": "^1.0.0-beta.4",
     "react-router-dom": "^4.3.1",
-    "react-router-redux": "^4.0.8",
+    "react-router-redux": "^5.0.0-alpha.9",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0",
     "serialize-javascript": "^1.5.0",
@@ -274,7 +278,7 @@
     "eslint": "^5.6.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^3.0.1",
-    "eslint-import-resolver-babel-module": "^4.0.0",
+    "eslint-import-resolver-babel-module": "5.0.0-beta.0",
     "eslint-loader": "^2.1.1",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
@@ -294,7 +298,7 @@
     "stylelint": "^9.5.0",
     "stylelint-config-standard": "^18.2.0",
     "stylelint-webpack-plugin": "^0.10.5",
-    "webpack": "^4.19.1",
+    "webpack": "^4.5.0",
     "webpack-bundle-analyzer": "^3.0.2",
     "webpack-cli": "^3.1.0",
     "webpack-manifest-plugin": "^2.0.4"

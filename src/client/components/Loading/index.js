@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import { colors } from '@client/theme/constants';
+import { colors } from '@client/styles/constants';
 import { Wrap, Circle } from './styles';
 
 type Props = {
