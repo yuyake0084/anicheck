@@ -19,7 +19,11 @@ import {
 type Props = {
   dataArray: Array<Object>,
   favorites: Array<number>,
-  handleClickLike: (e: SyntheticEvent<HTMLDivElement>, animeId: number) => void,
+  handleClickLike: (
+    e: SyntheticEvent<HTMLDivElement>,
+    animeId: number,
+    isFavorited: boolean,
+  ) => void,
 };
 
 export default function ListComponent(props: Props) {
@@ -37,7 +41,7 @@ export default function ListComponent(props: Props) {
         <Bottom>
           <IcoBox
             isFavorited={favorites.includes(item.id)}
-            onClick={e => handleClickLike(e, item.id)}
+            onClick={e => handleClickLike(e, item.id, favorites.includes(item.id))}
           >
             <Ico ico="heart" size={16} />
           </IcoBox>

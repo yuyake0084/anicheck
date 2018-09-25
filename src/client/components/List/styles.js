@@ -101,10 +101,10 @@ export const IcoBox = styled.div`
   ${({ isFavorited }) => `
     color: ${isFavorited ? '#fff' : colors.red};
     background-color: ${isFavorited ? colors.red : '#fff'};
-  `};
 
-  &:hover {
-    color: #fff;
-    background-color: ${colors.red};
-  }
+    &:hover {
+      color: ${isFavorited ? colors.red : '#fff'};
+      background-color: ${isFavorited ? '#fff' : colors.red};
+    }
+  `};
 `;

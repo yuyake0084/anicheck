@@ -38,6 +38,12 @@ export default (state: State = initialState, action: Action) => {
         favorites: [...state.favorites, action.payload],
       };
 
+    case 'DONE_UNREGISTER_FAVORITE':
+      return {
+        ...state,
+        favorites: state.favorites.filter(id => id !== action.payload),
+      };
+
     default:
       return state;
   }

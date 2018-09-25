@@ -7,17 +7,17 @@ const apiVersion = 1;
 
 export const homeSyncing = () => (dispatch: Dispatch) => dispatch({ type: 'HOME_SYNCING' });
 
-export const fetchFavorites = () => (dispatch: Dispatch) => {
+export const fetchFavorites = () => (dispatch: Dispatch, getState: GetState) => {
   const favorites = cookie.getValue();
   let payload;
 
   if (favorites != null) {
     payload = favorites;
   } else {
-    const dataArray = [];
+    const { home } = getState();
 
-    cookie.setValue(JSON.stringify(dataArray));
-    payload = dataArray;
+    payload = home.favorites;
+    cookie.setValue(JSON.stringify(payload));
   }
 
   dispatch({ type: 'DONE_FETCH_FAVORITES', payload });
@@ -41,7 +41,14 @@ export const fetchAnimes = (nextYear: ?string, nextQuarter: ?string) => async (
   dispatch({ type: 'DONE_FETCH_ANIMES', payload: data });
 };
 
-export const registerFavorite = (id: number) => (dispatch: Dispatch) => {
-  cookie.setValue(JSON.stringify([...cookie.getValue(), id]));
-  dispatch({ type: 'DONE_REGISTER_FAVORITE', payload: id });
+export const registerFavorite = (animeId: number) => (dispatch: Dispatch) => {
+  cookie.setValue(JSON.stringify([...cookie.getValue(), animeId]));
+  dispatch({ type: 'DONE_REGISTER_FAVORITE', payload: animeId });
+};
+
+export const unregisterFavorite = (animeId: number) => (dispatch: Dispatch, getState: GetState) => {
+  const { home } = getState();
+
+  cookie.setValue(home.favorites.filter(id => id !== animeId));
+  dispatch({ type: 'DONE_UNREGISTER_FAVORITE', payload: animeId });
 };

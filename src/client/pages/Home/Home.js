@@ -15,6 +15,7 @@ type Props = {
   fetchFavorites: Function,
   fetchAnimes: Function,
   registerFavorite: (animeId: number) => void,
+  unregisterFavorite: (animeId: number) => void,
 };
 
 export class Home extends React.PureComponent<Props> {
@@ -25,12 +26,16 @@ export class Home extends React.PureComponent<Props> {
     fetchAnimes();
   }
 
-  handleClickLike = (e: SyntheticEvent<HTMLDivElement>, animeId: number) => {
+  handleClickLike = (e: SyntheticEvent<HTMLDivElement>, animeId: number, isFavorited: boolean) => {
     e.preventDefault();
 
-    const { registerFavorite } = this.props;
+    const { registerFavorite, unregisterFavorite } = this.props;
 
-    registerFavorite(animeId);
+    if (!isFavorited) {
+      registerFavorite(animeId);
+    } else {
+      unregisterFavorite(animeId);
+    }
   };
 
   render() {
@@ -39,7 +44,7 @@ export class Home extends React.PureComponent<Props> {
     return (
       <>
         <Helmet title="ホーム" />
-        <Result>{`全${home.list.length}件`}</Result>
+        <Result>{`チェック済 ${home.favorites.length}本 / 全${home.list.length}本`}</Result>
         <List
           dataArray={home.list}
           favorites={home.favorites}
@@ -56,6 +61,7 @@ const connector = connect(
     fetchFavorites: () => dispatch(homeAction.fetchFavorites()),
     fetchAnimes: () => dispatch(homeAction.fetchAnimes()),
     registerFavorite: (animeId: number) => dispatch(homeAction.registerFavorite(animeId)),
+    unregisterFavorite: (animeId: number) => dispatch(homeAction.unregisterFavorite(animeId)),
   }),
 );
 
