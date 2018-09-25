@@ -7,6 +7,7 @@ const initialState = {
   isSyncing: false,
   year: moment().format('YYYY'),
   quarter: moment().format('Q'),
+  favorites: [],
   list: [],
 };
 
@@ -18,11 +19,23 @@ export default (state: State = initialState, action: Action) => {
         isSyncing: true,
       };
 
+    case 'DONE_FETCH_FAVORITES':
+      return {
+        ...state,
+        favorites: action.payload,
+      };
+
     case 'DONE_FETCH_ANIMES':
       return {
         ...state,
         isSyncing: true,
         list: action.payload,
+      };
+
+    case 'DONE_REGISTER_FAVORITE':
+      return {
+        ...state,
+        favorites: [...state.favorites, action.payload],
       };
 
     default:

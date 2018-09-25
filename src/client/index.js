@@ -9,13 +9,12 @@ import { ConnectedRouter } from 'react-router-redux';
 import { renderRoutes } from 'react-router-config';
 import { loadComponents } from 'loadable-components';
 
-import configureStore from './configureStore';
+import configureStore from './utils/configureStore';
 import routes from './routes';
 
 const initialState = window.__INITIAL_STATE;
 const history = createHistory();
 const store = configureStore(history, initialState);
-
 const render = (Routes: Array<Object>) => {
   ReactDOM.hydrate(
     <AppContainer>

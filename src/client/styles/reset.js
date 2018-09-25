@@ -52,4 +52,7 @@ injectGlobal`
   a {
     text-decoration: none;
   }
+  img {
+    vertical-align: middle;
+  }
 `;

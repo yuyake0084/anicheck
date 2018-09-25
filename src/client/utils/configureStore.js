@@ -6,7 +6,7 @@ import thunk from 'redux-thunk';
 import axios from 'axios';
 import { createLogger } from 'redux-logger';
 
-import rootReducer from './reducers';
+import rootReducer from '../reducers';
 
 export default (history: Object, initialState: Object = {}) => {
   const middlewares = [thunk.withExtraArgument(axios), routerMiddleware(history)];
@@ -25,9 +25,9 @@ export default (history: Object, initialState: Object = {}) => {
   const store = createStore(rootReducer, initialState, enhancers);
 
   if (module.hot) {
-    module.hot.accept('./reducers', () => {
+    module.hot.accept('../reducers', () => {
       try {
-        const nextReducer = require('./reducers').default;
+        const nextReducer = require('../reducers').default;
 
         store.replaceReducer(nextReducer);
       } catch (error) {

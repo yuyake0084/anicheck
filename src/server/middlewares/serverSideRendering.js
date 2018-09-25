@@ -14,7 +14,7 @@ import createHistory from 'history/createMemoryHistory';
 import renderHtml from '@server/utils/renderHtml';
 import routes from '@client/routes';
 
-import configureStore from '@client/configureStore';
+import configureStore from '@client/utils/configureStore';
 import assets from '../../../public/webpack-assets.json';
 
 export default (req: $Request, res: $Response) => {

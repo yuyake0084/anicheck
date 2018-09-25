@@ -128,7 +128,8 @@ export default {
               }
             ],
             'react-hot-loader/babel',
-            'loadable-components/babel'
+            'loadable-components/babel',
+            '@babel/plugin-proposal-class-properties',
           ],
         },
       },
